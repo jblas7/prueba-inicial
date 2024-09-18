@@ -49,3 +49,18 @@ document.getElementById('filtrar').addEventListener('click', function() {
     const fechaFin = document.getElementById('fechaFin').value;
     console.log('Filtrando desde', fechaInicio, 'hasta', fechaFin);
 });
+
+document.getElementById('filtrar').addEventListener('click', function() {
+    const fechaInicio = new Date(document.getElementById('fechaInicio').value);
+    const fechaFin = new Date(document.getElementById('fechaFin').value);
+
+    marcadores.forEach(marcador => {
+        const fechaEvento = new Date(marcador.getPopup().getContent());
+        
+        if (fechaEvento >= fechaInicio && fechaEvento <= fechaFin) {
+            marcador.addTo(miMapa);
+        } else {
+            miMapa.removeLayer(marcador);
+        }
+    });
+});
