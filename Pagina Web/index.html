@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desastres Naturales</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header>
+        <h1>Seguimiento de Eventos Climáticos Extremos</h1>
+    </header>
+    <span>
+        Bienvenido a nuestra pagina Web donde podras saber si esta ocurriendo algun desastre natural cerca de ti
+    </span>
+    <section class="filters">
+        <h2>Filtrar por fecha</h2>
+        <form id="date-filter-form">
+            <label for="start-date">Fecha de inicio:</label>
+            <input type="date" id="start-date" name="start-date" required>
+
+            <label for="end-date">Fecha de fin:</label>
+            <input type="date" id="end-date" name="end-date" required>
+
+            <button type="submit">Aplicar Filtro</button>
+        </form>
+    </section>
+    <section class="map-container">
+        <div id="map"></div>
+    </section>
+    <footer>
+        <p></p>
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
