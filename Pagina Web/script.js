@@ -1,24 +1,24 @@
-var map = L.map('map').setView([0, 0], 2);
+var mapa = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap'
-}).addTo(map);
+}).addTo(mapa);
 
 var icons = {
-    wildfire: L.icon({
+    incendio: L.icon({
         iconUrl: 'img/incendio.png',
         iconSize: [32, 32]
     }),
-    storm: L.icon({
+    tormenta: L.icon({
         iconUrl: 'img/tormenta-electrica.png',
         iconSize: [32, 32]
     }),
-    earthquake: L.icon({
-        iconUrl: 'img/terremoto.png',
+    volcan: L.icon({
+        iconUrl: 'img/volcan.png',
         iconSize: [32, 32]
     }),
-    ice: L.icon({
+    iceberg: L.icon({
         iconUrl: 'img/hielo.png',
         iconSize: [32, 32]
     })
@@ -27,38 +27,37 @@ var icons = {
 document.getElementById('date-filter-form').addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    const startDate = document.getElementById('start-date').value;
-    const endDate = document.getElementById('end-date').value;
+    const fechaInicio = document.getElementById('start-date').value;
+    const fechaFin = document.getElementById('end-date').value;
 
-    if (startDate && endDate) {
-        await fetchEvents(startDate, endDate);
+    if (startDate && fechaFin) {
+        await fetchEvents(fechaInicio, fechaFin);
     }
 });
 
-async function fetchEvents(startDate, endDate) {
-    try {
-        const response = await fetch(`https://eonet.gsfc.nasa.gov/api/v3/events?status=open&start=${startDate}&end=${endDate}`);
-        const data = await response.json();
+async function fetchEvents(fechaInicio, fechaFin) {
 
-        map.eachLayer((layer) => {
+        const solicitudjson = await fetch(`https://eonet.gsfc.nasa.gov/api/v3/events?status=open&start=${fechaInicio}&end=${fechaFin}`);
+        const info = await solicitudjson.json();
+
+        mapa.eachLayer((layer) => {
             if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
+                mapa.removeLayer(layer);
             }
         });
 
-        data.events.forEach(event => {
+        info.events.forEach(event => {
             let iconType;
 
             if (event.categories[0].title === 'Wildfires') {
-                iconType = icons.wildfire;
+                iconType = icons.incendio;
             } else if (event.categories[0].title === 'Severe Storms') {
-                iconType = icons.storm;
-            } else if (event.categories[0].title === 'Earthquakes') {
-                iconType = icons.earthquake;
+                iconType = icons.tormenta;
             } else if (event.categories[0].title === 'Sea and Lake Ice') {
-                iconType = icons.ice;
-            }
-             
+                iconType = icons.iceberg;
+            } else if (event.categories[0].title === 'Volcanoes') {
+                iconType = icons.volcan;
+            }      
             else {
                 iconType = null;
             }
@@ -66,7 +65,7 @@ async function fetchEvents(startDate, endDate) {
             if (iconType && event.geometry.length > 0) {
                 let coords = event.geometry[0].coordinates;
 
-                let marker = L.marker([coords[1], coords[0]], { icon: iconType }).addTo(map);
+                let marker = L.marker([coords[1], coords[0]], { icon: iconType }).addTo(mapa);
 
                 marker.bindPopup(`
                     <strong>${event.title}</strong><br>
@@ -84,9 +83,7 @@ async function fetchEvents(startDate, endDate) {
                 });
             }
         });
-    } catch (error) {
-        console.error('Error al obtener los eventos:', error);
-    }
+
 }
 
 fetchEvents(); 
