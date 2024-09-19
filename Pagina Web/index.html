@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desastres Naturales</title>
+    <link rel="icon" type="image/x-icon" href="./img/Radar.png" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
     <header>
         <h1>Seguimiento de Eventos Climáticos Extremos</h1>
@@ -22,37 +25,32 @@
 
             <label for="end-date">Fecha de fin:</label>
             <input type="date" id="end-date" name="end-date" required>
-
+        </form>
+        <div class="botones">
             <button type="submit">Aplicar Filtro</button>
             <button type="submit">Cancelar Filtro</button>
-        </form>
+        </div>
         <div class="filtro-eventos" id="filtrar-eventos">
-            <p>Mostrar: </p>
             <label>
-                <input type="checkbox" id="filtrar-volcanes" checked> Volcanes
+                <input type="checkbox" id="filtrar-volcanes"> Volcanes
             </label>
             <label>
-                <input type="checkbox" id="filtrar-tormentas" checked> Tormentas
+                <input type="checkbox" id="filtrar-tormentas"> Tormentas
             </label>
             <label>
-                <input type="checkbox" id="filtrar-icebergs" checked> Icebergs
+                <input type="checkbox" id="filtrar-icebergs"> Icebergs
             </label>
             <label>
-                <input type="checkbox" id="filtrar-incendios" checked> Incendios
+                <input type="checkbox" id="filtrar-incendios"> Incendios
             </label>
         </div>
-        
-          
-        <section class="map-container">
-            <div id="map"></div>
-        </section>
-        
-        <section class="event-details-container">
-            <h2>Detalles del Evento</h2>
-            <div id="event-details">
-            </div>
-        </section>
-        
+    </section>
+    <section class="map-container">
+        <div id="map"></div>
+    </section>
+    <h2>Detalles del Evento</h2>
+        <div id="event-details">
+        </div>
     <footer>
         <p>Pagina Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/"> EONET</a></p>
         <p>Documentacion Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/docs/v3"> EONET</a></p>
@@ -60,4 +58,5 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
