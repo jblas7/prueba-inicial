@@ -64,8 +64,6 @@ async function fetchEvents(startDate, endDate) {
                 iconType = icons.ice;
             } else if (event.categories[0].title === 'Volcanoes') {
                 iconType = icons.volcan;
-            } else {
-                iconType = null;
             }
 
             if (iconType && event.geometry.length > 0) {
