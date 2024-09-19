@@ -29,7 +29,8 @@ var icons = {
 };
 
 // por defecto todo activo
-let filtrosActivados = {
+
+let activeFilters = {
     wildfires: true,
     storms: true,
     earthquakes: true,
@@ -129,7 +130,7 @@ function clearMarkers() {
     markers = [];
 }
 
-function filtrosAplicados() {
+function applyFilters() {
     markers.forEach(marker => {
         let category = marker.category;
 
