@@ -17,6 +17,10 @@ var icons = {
     earthquake: L.icon({
         iconUrl: 'img/terremoto.png',
         iconSize: [32, 32]
+    }),
+    ice: L.icon({
+        iconUrl: 'img/hielo.png',
+        iconSize: [32, 32]
     })
 };
 
@@ -51,7 +55,11 @@ async function fetchEvents(startDate, endDate) {
                 iconType = icons.storm;
             } else if (event.categories[0].title === 'Earthquakes') {
                 iconType = icons.earthquake;
-            } else {
+            } else if (event.categories[0].title === 'Sea and Lake Ice') {
+                iconType = icons.ice;
+            }
+             
+            else {
                 iconType = null;
             }
 

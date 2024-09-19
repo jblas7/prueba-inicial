@@ -36,6 +36,9 @@ span {
     width: 100%;
 }
 
+.filtro-eventos{
+    display: flex;
+}
 form {
     display: flex;
     justify-content: space-between;
