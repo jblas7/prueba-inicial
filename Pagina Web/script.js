@@ -28,8 +28,6 @@ var icons = {
     })
 };
 
-// por defecto todo activo
-
 let activeFilters = {
     wildfires: true,
     storms: true,
@@ -43,7 +41,6 @@ let markers = [];
 document.querySelectorAll('.filtro-eventos input[type="checkbox"]').forEach(checkbox => {
     checkbox.addEventListener('change', () => {
         updateFilters();
-
         applyFilters();
     });
 });
@@ -61,14 +58,30 @@ document.getElementById('date-filter-form').addEventListener('submit', async fun
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
 
+    if (new Date(startDate) > new Date(endDate)) {
+        alert("La fecha de inicio no puede ser posterior a la fecha de fin.");
+        return;
+    }
+
     if (startDate && endDate) {
         await fetchEvents(startDate, endDate);
     }
 });
 
-async function fetchEvents(startDate, endDate) {
+document.getElementById('cancel-filter').addEventListener('click', async function () {
+    document.getElementById('start-date').value = '';
+    document.getElementById('end-date').value = '';
+    await fetchEvents();
+});
+
+async function fetchEvents(startDate = '', endDate = '') {
     try {
-        const response = await fetch(`https://eonet.gsfc.nasa.gov/api/v3/events?status=open&start=${startDate}&end=${endDate}`);
+        let url = `https://eonet.gsfc.nasa.gov/api/v3/events?status=open`;
+        if (startDate && endDate) {
+            url += `&start=${startDate}&end=${endDate}`;
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
         console.log(data);
 
