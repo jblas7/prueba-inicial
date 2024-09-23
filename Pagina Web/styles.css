@@ -23,10 +23,11 @@ h1 {
 h2 {
     display: flex;
     justify-content: center;
+    padding-top: 8px;
     padding-bottom: 10px;
 }
 
-span {
+.span-presentacion {
     display: flex;
     justify-content: center;
     font-size: 20px;
@@ -84,13 +85,16 @@ button:hover {
     background-color: #357ab8;
 }
 
-.filtro-eventos{
+.filtro-eventos {
     display: flex;
     justify-content: center;
     padding-top: 5px;
 }
 
 .filtro-eventos label {
+    position: relative;
+    top: 8px;
+    left: 5px;
     margin-right: 15px;
 }
 
@@ -106,8 +110,21 @@ button:hover {
     border-radius: 10px;
 }
 
-.event-details-container {
-    margin-top: 10px;
+span {
+    font-size: 16px;
+    border-radius: 7px;
+}
+
+#event-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+p {
+    padding-top: 5px;
 }
 
 footer {
