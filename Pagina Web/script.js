@@ -34,10 +34,6 @@ var icons = {
         iconUrl: 'img/tormenta-electrica.png',
         iconSize: [32, 32]
     }),
-    earthquake: L.icon({
-        iconUrl: 'img/terremoto.png',
-        iconSize: [32, 32]
-    }),
     ice: L.icon({
         iconUrl: 'img/hielo.png',
         iconSize: [32, 32]
