@@ -1,9 +1,29 @@
 var map = L.map('map').setView([0, 0], 2);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap'
-}).addTo(map);
+});
+
+var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 17,
+    attribution: '© OpenTopoMap'
+});
+
+var esriWorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    attribution: '© ESRI, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS'
+});
+
+openStreetMap.addTo(map);
+
+var baseMaps = {
+    "OpenStreetMap": openStreetMap,
+    "OpenTopoMap": openTopoMap,
+    "ESRI World Imagery": esriWorldImagery
+};
+
+L.control.layers(baseMaps).addTo(map);
 
 var icons = {
     wildfire: L.icon({
