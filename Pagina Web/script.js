@@ -111,6 +111,8 @@ async function fetchEvents(startDate = '', endDate = '') {
                 iconType = icons.wildfire;
             } else if (category === 'Severe Storms') {
                 iconType = icons.storm;
+            } else if (category === 'Earthquakes') {
+                iconType = icons.earthquake;
             } else if (category === 'Sea and Lake Ice') {
                 iconType = icons.ice;
             } else if (category === 'Volcanoes') {
@@ -137,7 +139,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                         <h3>${event.title}</h3>
                         <p><strong>Categoría:</strong> ${category}</p>
                         <p><strong>Fecha de inicio:</strong> ${event.geometry[0].date}</p>
-                        <p><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
+                        <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
                     `;
                 });
             }

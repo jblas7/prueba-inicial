@@ -7,6 +7,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+
 }
 
 header {
@@ -36,7 +37,7 @@ h2 {
 
 .filters {
     position: relative;
-    left: 80px;
+    left: 85px;
     margin-bottom: 20px;
     background-color: #fff;
     padding: 15px;
@@ -119,12 +120,25 @@ span {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    left: 550px;
+    background-color: white;
+    border-radius: 10px;
     margin-left: 20px;
+    width: 40%;
     margin-bottom: 15px;
 }
 
+h3 {
+    padding-top: 10px;
+}
+
 p {
-    padding-top: 5px;
+    padding-top: 7px;
+}
+
+#ubic {
+    padding-bottom: 5px;
 }
 
 footer {
