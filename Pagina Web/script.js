@@ -135,7 +135,6 @@ async function fetchEvents(startDate = '', endDate = '') {
                     Categoría: ${category}<br>
                     Fecha de inicio: ${event.geometry[0].date}<br>
                     ${weatherInfo ? `
-                        <strong>Clima Actual:</strong><strong>
                         Temperatura: ${weatherInfo.temperature} °C<br>
                         <img src="${weatherInfo.icon}" alt="weather icon">
                     ` : 'Información del clima no disponible.'}
@@ -149,7 +148,6 @@ async function fetchEvents(startDate = '', endDate = '') {
                         <p><strong>Fecha de inicio:</strong> ${event.geometry[0].date}</p>
                         <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
                         ${clickedWeatherInfo ? `
-                            <h4>Clima Actual:</h4>
                             <p>Temperatura: ${clickedWeatherInfo.temperature} °C</p>
                         ` : 'Información del clima no disponible.'}
                     `;
