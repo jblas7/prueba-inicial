@@ -90,6 +90,14 @@ document.getElementById('cancel-filter').addEventListener('click', async functio
     await fetchEvents();
 });
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
 async function fetchEvents(startDate = '', endDate = '') {
     try {
         let url = `https://eonet.gsfc.nasa.gov/api/v3/events?status=open`;
@@ -133,7 +141,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                 marker.bindPopup(`
                     <strong>${event.title}</strong><br>
                     Categoría: ${category}<br>
-                    Fecha de inicio: ${event.geometry[0].date}<br>
+                    Fecha de inicio: ${formatDate(event.geometry[0].date)}<br>
                     ${weatherInfo ? `
                         Temperatura: ${weatherInfo.temperature} °C<br>
                         <img src="${weatherInfo.icon}" alt="weather icon">
@@ -145,7 +153,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                     document.getElementById('event-details').innerHTML = `
                         <h3>${event.title}</h3>
                         <p><strong>Categoría:</strong> ${category}</p>
-                        <p><strong>Fecha de inicio:</strong> ${event.geometry[0].date}</p>
+                        <p><strong>Fecha de inicio:</strong> ${formatDate(event.geometry[0].date)}</p>
                         <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
                         ${clickedWeatherInfo ? `
                             <p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>
@@ -153,8 +161,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                     `;
                 });
             }
-            }
-        
+        }
     
         applyFilters();
 
@@ -192,14 +199,13 @@ async function fetchTiempo(lat, lon) {
     const api_key = 'f2ccd80c8f58a0db41ea1b003a74f7e0';
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
 
-        const response = await fetch(url);
-        const weatherData = await response.json();
+    const response = await fetch(url);
+    const weatherData = await response.json();
 
-        return {
-            temperature: weatherData.main.temp,
-            icon: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`
-        };
-
+    return {
+        temperature: weatherData.main.temp,
+        icon: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`
+    };
 }
 
 fetchEvents();
