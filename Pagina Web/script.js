@@ -103,7 +103,7 @@ async function fetchEvents(startDate = '', endDate = '') {
 
         clearMarkers();
 
-        data.events.forEach(event => {
+        for (const event of data.events) {
             let iconType;
             let category = event.categories[0].title;
 
@@ -122,6 +122,8 @@ async function fetchEvents(startDate = '', endDate = '') {
             if (iconType && event.geometry.length > 0) {
                 let coords = event.geometry[0].coordinates;
 
+                const weatherInfo = await fetchTiempo(coords[1], coords[0]);
+
                 let marker = L.marker([coords[1], coords[0]], { icon: iconType });
                 marker.category = category;
                 markers.push(marker);
@@ -132,18 +134,29 @@ async function fetchEvents(startDate = '', endDate = '') {
                     <strong>${event.title}</strong><br>
                     Categoría: ${category}<br>
                     Fecha de inicio: ${event.geometry[0].date}<br>
+                    ${weatherInfo ? `
+                        <strong>Clima Actual:</strong><strong>
+                        Temperatura: ${weatherInfo.temperature} °C<br>
+                        <img src="${weatherInfo.icon}" alt="weather icon">
+                    ` : 'Información del clima no disponible.'}
                 `);
 
-                marker.on('click', function () {
+                marker.on('click', async function () {
+                    const clickedWeatherInfo = await fetchTiempo(coords[1], coords[0]);
+
                     document.getElementById('event-details').innerHTML = `
                         <h3>${event.title}</h3>
                         <p><strong>Categoría:</strong> ${category}</p>
                         <p><strong>Fecha de inicio:</strong> ${event.geometry[0].date}</p>
                         <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
+                        ${clickedWeatherInfo ? `
+                            <h4>Clima Actual:</h4>
+                            <p>Temperatura: ${clickedWeatherInfo.temperature} °C</p>
+                        ` : 'Información del clima no disponible.'}
                     `;
                 });
             }
-        });
+        }
 
         applyFilters();
 
@@ -175,6 +188,24 @@ function applyFilters() {
             map.removeLayer(marker);
         }
     });
+}
+
+async function fetchTiempo(lat, lon) {
+    const api_key = 'f2ccd80c8f58a0db41ea1b003a74f7e0';
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
+
+    try {
+        const response = await fetch(url);
+        const weatherData = await response.json();
+
+        return {
+            temperature: weatherData.main.temp,
+            icon: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`
+        };
+    } catch (error) {
+        console.error('Error al obtener el clima:', error);
+        return null;
+    }
 }
 
 fetchEvents();
