@@ -143,7 +143,6 @@ async function fetchEvents(startDate = '', endDate = '') {
 
                 marker.on('click', async function () {
                     const clickedWeatherInfo = await fetchTiempo(coords[1], coords[0]);
-
                     document.getElementById('event-details').innerHTML = `
                         <h3>${event.title}</h3>
                         <p><strong>Categoría:</strong> ${category}</p>
@@ -156,8 +155,9 @@ async function fetchEvents(startDate = '', endDate = '') {
                     `;
                 });
             }
-        }
-
+            }
+        
+    
         applyFilters();
 
     } catch (error) {
@@ -194,7 +194,6 @@ async function fetchTiempo(lat, lon) {
     const api_key = 'f2ccd80c8f58a0db41ea1b003a74f7e0';
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
 
-    try {
         const response = await fetch(url);
         const weatherData = await response.json();
 
@@ -202,10 +201,7 @@ async function fetchTiempo(lat, lon) {
             temperature: weatherData.main.temp,
             icon: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`
         };
-    } catch (error) {
-        console.error('Error al obtener el clima:', error);
-        return null;
-    }
+
 }
 
 fetchEvents();
