@@ -148,7 +148,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                         <p><strong>Fecha de inicio:</strong> ${event.geometry[0].date}</p>
                         <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
                         ${clickedWeatherInfo ? `
-                            <p>Temperatura: ${clickedWeatherInfo.temperature} °C</p>
+                            <p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>
                         ` : 'Información del clima no disponible.'}
                     `;
                 });

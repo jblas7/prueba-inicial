@@ -48,13 +48,14 @@ h2 {
 
 form {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-top: 7px;
     padding-bottom: 5px;
 }
 
 form label {
+    margin-left: 50px;
     margin-right: 10px;
 }
 
@@ -62,6 +63,7 @@ form input {
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    margin-right: 50px;
 }
 
 .botones {
