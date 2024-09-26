@@ -164,7 +164,6 @@ async function fetchEvents(startDate = '', endDate = '') {
                     <h3>${event.title}</h3>
                     <p><strong>Categoría:</strong> ${category}</p>
                     <p><strong>Fecha de inicio:</strong> ${formatDate(event.geometry[0].date)}</p>
-                    <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
                     ${clickedWeatherInfo ? `<p><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
                 `;                
                 });
@@ -204,7 +203,7 @@ function applyFilters() {
 }
 
 async function fetchTiempo(lat, lon) {
-    const api_key = 'f2ccd80c8f58a0db41ea1b003a74f7e0';
+    const api_key = 'f2ccd80c8f58a0db41ea1b003a74f7e0';  /* Usar f7bb196a8e2460fc6ed57801655f12a7 si la otra alcanza el limite de peticiones diarias*/
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
 
     const response = await fetch(url);
