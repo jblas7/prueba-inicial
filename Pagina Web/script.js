@@ -151,7 +151,7 @@ async function fetchEvents(startDate = '', endDate = '') {
 
                     if (clickedWeatherInfo) {
                         popupContent += `
-                            <p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>
+                            <p><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>
                             <img src="${clickedWeatherInfo.icon}" alt="Icono del clima">
                         `;
                     } else {
@@ -165,7 +165,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                     <p><strong>Categoría:</strong> ${category}</p>
                     <p><strong>Fecha de inicio:</strong> ${formatDate(event.geometry[0].date)}</p>
                     <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
-                    ${clickedWeatherInfo ? `<p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
+                    ${clickedWeatherInfo ? `<p><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
                 `;                
                 });
             }
@@ -215,5 +215,27 @@ async function fetchTiempo(lat, lon) {
         icon: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`
     };
 }
+
+map.on('click', async function (e) {
+    const { lat, lng } = e.latlng;
+    
+    const weatherInfo = await fetchTiempo(lat, lng);
+
+    const popupContent = `
+        <strong>Ubicación seleccionada</strong><br>
+        ${weatherInfo ? `<p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
+        <img src="${weatherInfo.icon}" alt="Icono del clima">
+    `;
+
+    L.popup()
+        .setLatLng(e.latlng)
+        .setContent(popupContent)
+        .openOn(map);
+
+    document.getElementById('event-details').innerHTML = `
+        <h3>Ubicación Seleccionada</h3>
+        <p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>
+    `;
+});
 
 fetchEvents();
