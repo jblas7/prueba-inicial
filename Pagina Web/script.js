@@ -130,39 +130,43 @@ async function fetchEvents(startDate = '', endDate = '') {
             if (iconType && event.geometry.length > 0) {
                 let coords = event.geometry[0].coordinates;
 
-                const weatherInfo = await fetchTiempo(coords[1], coords[0]);
-
                 let marker = L.marker([coords[1], coords[0]], { icon: iconType });
                 marker.category = category;
                 markers.push(marker);
 
                 marker.addTo(map);
 
-                marker.bindPopup(`
-                    <strong>${event.title}</strong><br>
-                    Categoría: ${category}<br>
-                    Fecha de inicio: ${formatDate(event.geometry[0].date)}<br>
-                    ${weatherInfo ? `
-                        Temperatura: ${weatherInfo.temperature} °C<br>
-                        <img src="${weatherInfo.icon}" alt="weather icon">
-                    ` : 'Información del clima no disponible.'}
-                `);
-
                 marker.on('click', async function () {
                     const clickedWeatherInfo = await fetchTiempo(coords[1], coords[0]);
-                    document.getElementById('event-details').innerHTML = `
-                        <h3>${event.title}</h3>
-                        <p><strong>Categoría:</strong> ${category}</p>
-                        <p><strong>Fecha de inicio:</strong> ${formatDate(event.geometry[0].date)}</p>
-                        <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
-                        ${clickedWeatherInfo ? `
-                            <p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>
-                        ` : 'Información del clima no disponible.'}
+                    
+                    let popupContent = `
+                        <strong>${event.title}</strong><br>
+                        Categoría: ${category}<br>
+                        Fecha de inicio: ${formatDate(event.geometry[0].date)}<br>
                     `;
+
+                    if (clickedWeatherInfo) {
+                        popupContent += `
+                            <p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>
+                            <img src="${clickedWeatherInfo.icon}" alt="Icono del clima">
+                        `;
+                    } else {
+                        popupContent += 'Información del clima no disponible.';
+                    }
+
+                    marker.bindPopup(popupContent).openPopup();
+
+                    document.getElementById('event-details').innerHTML = `
+                    <h3>${event.title}</h3>
+                    <p><strong>Categoría:</strong> ${category}</p>
+                    <p><strong>Fecha de inicio:</strong> ${formatDate(event.geometry[0].date)}</p>
+                    <p id="ubic"><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
+                    ${clickedWeatherInfo ? `<p><strong>Temperatura:</strong> ${clickedWeatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
+                `;                
                 });
             }
         }
-    
+
         applyFilters();
 
     } catch (error) {
