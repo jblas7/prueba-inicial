@@ -38,13 +38,13 @@ h2 {
 
 .filters {
     position: relative;
-    left: 85px;
+    left: 11%;
     margin-bottom: 20px;
     background-color: #fff;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    width: 75%;
 }
 
 form {
@@ -109,7 +109,9 @@ button:hover {
 }
 
 #map {
-    width: 100%;
+    width: 90%;
+    position: relative;
+    left: 4%;
     height: 500px;
     border-radius: 10px;
 }
@@ -118,17 +120,22 @@ span {
     font-size: 16px;
     border-radius: 7px;
 }
-        
+
 .titulo-popup-tiempo{
     font-weight: bold;
     font-size: 13px;
-    margin-bottom: 100px;
+
 }
 
 .temperatura-popup-tiempo{
 padding-bottom: 10px;
 margin: 3px;
 }
+
+.icono-popup-tiempo{
+    padding: 0px;
+}
+
 
 #event-details {
     display: flex;

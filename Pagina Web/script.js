@@ -152,7 +152,7 @@ async function fetchEvents(startDate = '', endDate = '') {
                     if (clickedWeatherInfo) {
                         popupContent += `
                             <p class='temperatura-popup-tiempo'><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>
-                            <img src="${clickedWeatherInfo.icon}" alt="Icono del clima">
+                            <img class='icono-popup-tiempo' src="${clickedWeatherInfo.icon}" alt="Icono del clima">
                         `;
                     } else {
                         popupContent += 'Información del clima no disponible.';
