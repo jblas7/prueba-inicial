@@ -144,14 +144,14 @@ async function fetchEvents(startDate = '', endDate = '') {
                     const clickedWeatherInfo = await fetchTiempo(coords[1], coords[0]);
                     
                     let popupContent = `
-                        <strong>${event.title}</strong><br>
-                        Categoría: ${category}<br>
-                        Fecha de inicio: ${formatDate(event.geometry[0].date)}<br>
+                        <strong class='titulo-popup-tiempo'>${event.title}</strong><br>
+                        <strong>Categoría</strong>: ${category}<br>
+                        <strong>Fecha de inicio:<strong> ${formatDate(event.geometry[0].date)}<br>
                     `;
 
                     if (clickedWeatherInfo) {
                         popupContent += `
-                            <p><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>
+                            <p class='temperatura-popup-tiempo'><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>
                             <img src="${clickedWeatherInfo.icon}" alt="Icono del clima">
                         `;
                     } else {
