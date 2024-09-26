@@ -85,9 +85,13 @@ document.getElementById('date-filter-form').addEventListener('submit', async fun
 });
 
 document.getElementById('cancel-filter').addEventListener('click', async function () {
-    document.getElementById('start-date').value = '';
-    document.getElementById('end-date').value = '';
-    await fetchEvents();
+    const startDate = '2000-01-01';
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    document.getElementById('start-date').value = startDate;
+    document.getElementById('end-date').value = currentDate;
+
+    await fetchEvents(startDate, currentDate);
 });
 
 function formatDate(dateString) {
