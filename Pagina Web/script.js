@@ -144,15 +144,15 @@ async function fetchEvents(startDate = '', endDate = '') {
                     const clickedWeatherInfo = await fetchTiempo(coords[1], coords[0]);
                     
                     let popupContent = `
-                        <strong class='titulo-popup-tiempo'>${event.title}</strong><br>
-                        <strong>Categoría</strong>: ${category}<br>
-                        <strong>Fecha de inicio:<strong> ${formatDate(event.geometry[0].date)}<br>
+                        <strong>${event.title}</strong><br>
+                        Categoría: ${category}<br>
+                        Fecha de inicio: ${formatDate(event.geometry[0].date)}<br>
                     `;
 
                     if (clickedWeatherInfo) {
                         popupContent += `
-                            <p class='temperatura-popup-tiempo'><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>
-                            <img class='icono-popup-tiempo' src="${clickedWeatherInfo.icon}" alt="Icono del clima">
+                            <p><strong>Temperatura actual:</strong> ${clickedWeatherInfo.temperature} °C</p>
+                            <img src="${clickedWeatherInfo.icon}" alt="Icono del clima">
                         `;
                     } else {
                         popupContent += 'Información del clima no disponible.';
