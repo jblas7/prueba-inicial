@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desastres Naturales 3D</title>
+    <link rel="icon" type="image/x-icon" href="./img/Radar.png" />
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Seguimiento de Eventos Climáticos Extremos en 3D</h1>
+    </header>
+    <span class="span-presentacion">
+        Bienvenido a nuestra pagina Web donde podras saber si esta ocurriendo algun desastre natural cerca de ti
+    </span>
+    <section class="filters">
+        <h2>Filtrar por fecha</h2>
+        <form id="date-filter-form">
+            <label for="start-date">Fecha de inicio:</label>
+            <input type="date" id="start-date" name="start-date" required>
+
+            <label for="end-date">Fecha de fin:</label>
+            <input type="date" id="end-date" name="end-date" required>
+        </form>
+        <div class="botones">
+            <button type="submit" form="date-filter-form">Aplicar Filtro</button>
+            <button type="button" id="cancel-filter">Cancelar Filtro</button>
+        </div>
+        <div class="filtro-eventos" id="filtrar-eventos">
+            <p>Mostrar: </p>
+            <label>
+                <input type="checkbox" id="filtrar-volcanes" checked> Volcanes
+            </label>
+            <label>
+                <input type="checkbox" id="filtrar-tormentas" checked> Tormentas
+            </label>
+            <label>
+                <input type="checkbox" id="filtrar-icebergs" checked> Icebergs
+            </label>
+            <label>
+                <input type="checkbox" id="filtrar-incendios" checked> Incendios
+            </label>
+        </div>
+    </section>
+    
+    <!-- Modificar el contenedor para CesiumJS -->
+    <section class="map-container">
+        <div id="cesiumContainer"></div>
+    </section>
+
+    <h2>Detalles del Evento</h2>
+    <div id="event-details">
+    </div>
+    <footer>
+        <p>Pagina Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/"> EONET</a></p>
+        <p>Documentacion Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/docs/v3"> EONET</a></p>
+    </footer>
+    
+    <!-- Quitar Leaflet -->
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
+    
+    <!-- Añadir CesiumJS -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Cesium.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
