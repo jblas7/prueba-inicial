@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desastres Naturales 3D</title>
+    <title>Desastres Naturales</title>
     <link rel="icon" type="image/x-icon" href="./img/Radar.png" />
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <h1>Seguimiento de Eventos Climáticos Extremos en 3D</h1>
+        <img src="./img/nasa.png" alt="Nasa">
+        <h1>Seguimiento de Eventos Climáticos Extremos</h1>
+        <img src="./img/sanvalero.png" alt="Sanvalero" class="san-valero">
     </header>
     <span class="span-presentacion">
-        Bienvenido a nuestra pagina Web donde podras saber si esta ocurriendo algun desastre natural cerca de ti
+        Bienvenido a nuestra página Web donde podrás saber si está ocurriendo algún desastre natural cerca de ti.
     </span>
     <section class="filters">
         <h2>Filtrar por fecha</h2>
@@ -46,24 +48,22 @@
             </label>
         </div>
     </section>
-    
-    <!-- Modificar el contenedor para CesiumJS -->
-    <section class="map-container">
-        <div id="cesiumContainer"></div>
-    </section>
-
-    <h2>Detalles del Evento</h2>
-    <div id="event-details">
+    <div class="map-detalles">
+        <section class="map-container">
+            <div id="cesiumContainer"></div>
+        </section>
+        <div class="detalles">
+            <h2 class="titulo-detalles">Detalles del Evento</h2>
+            <div id="event-details">
+            </div>
+        </div>
     </div>
     <footer>
-        <p>Pagina Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/"> EONET</a></p>
-        <p>Documentacion Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/docs/v3"> EONET</a></p>
+        <p>Página Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/"> EONET</a></p>
+        <span>© Daniel Santamaría y Jorge Blasco</span>
+        <p>Documentación Oficial de la API: <a href="https://eonet.gsfc.nasa.gov/docs/v3"> EONET</a></p>
     </footer>
     
-    <!-- Quitar Leaflet -->
-    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
-    
-    <!-- Añadir CesiumJS -->
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Cesium.js"></script>
     <script src="script.js"></script>
 </body>
