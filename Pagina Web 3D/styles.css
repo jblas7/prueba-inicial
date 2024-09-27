@@ -10,39 +10,59 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: center;
     background-color: #4a90e2;
     padding: 20px;
     text-align: center;
     color: white;
 }
 
-h1 {
-    font-size: 24px;
+header img {
+    position: relative;
+    right: 22%;
+    max-width: 70px;
+    border-radius: 15px;
 }
 
-h2 {
+.san-valero {
+    position: relative;
+    left: 20%;
+    max-width: 80px;
+}
+
+header h1 {
     display: flex;
-    justify-content: center;
-    padding-top: 8px;
-    padding-bottom: 10px;
+    align-items: center;
+    font-size: 24px;
 }
 
 .span-presentacion {
     display: flex;
     justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
     margin: 25px;
 }
 
 .filters {
-    position: relative;
-    left: 85px;
-    margin-bottom: 20px;
     background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;
+    position: relative;
+    left: 13%;
+    width: 75%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+}
+
+.filters h2 {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    margin: 0;
 }
 
 form {
@@ -70,6 +90,7 @@ form input {
     justify-content: center;
     padding-top: 7px;
     padding-bottom: 7px;
+    font-weight: bold;
 }
 
 button {
@@ -80,6 +101,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
+
 }
 
 button:hover {
@@ -99,6 +121,17 @@ button:hover {
     margin-right: 15px;
 }
 
+.map-detalles {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.map-container {
+    position: relative;
+    left: 20px;
+    width: 60%;
+}
+
 #cesiumContainer {
     position: relative;
     left: 20px;
@@ -107,27 +140,65 @@ button:hover {
     border-radius: 10px;
 }
 
+.titulo-popup-tiempo {
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 100px;
+}
+
+.temperatura-popup-tiempo {
+    padding-bottom: 10px;
+    margin: 3px;
+}
+
+.leaflet-popup-content {
+    text-align: center;
+    margin-top: 13px;
+    margin-bottom: 5px;
+}
+
+.leaflet-popup-content p {
+    margin: 5px;
+
+}
+
 span {
     font-size: 16px;
     border-radius: 7px;
+}
+
+.detalles {
+    position: relative;
+    left: 4%;
+    padding-top: 20px;
+}
+
+.titulo-detalles {
+    font-size: 25px;
+    font-family: sans-serif;
+    padding-top: 2%;
+    padding-bottom: 1.5%;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
 }
 
 #event-details {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    left: 550px;
+    width: 100%;
     background-color: white;
     border-radius: 10px;
-    margin-left: 20px;
-    width: 40%;
     padding-bottom: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 3%;
 }
 
 h3 {
-    padding-top: 10px;
+    padding: 10px;
+    padding-bottom: 0;
 }
 
 p {
@@ -141,7 +212,8 @@ p {
 footer {
     display: flex;
     justify-content: space-evenly;
-    background-color: #2c3e50;
+    align-items: flex-end;
+    background-color: #4a90e2;
     color: white;
     text-align: center;
     padding: 20px;
@@ -153,4 +225,8 @@ footer {
 footer a {
     text-decoration: none;
     color: lightgray;
+}
+
+footer span {
+    display: flex;
 }

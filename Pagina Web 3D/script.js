@@ -1,11 +1,22 @@
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ZjllM2E5YS1hYTNlLTQwZDctOGU3Ni1mZDZhZWQ5NjY4OGEiLCJpZCI6MjQ0MjkwLCJpYXQiOjE3MjczNDMxNTN9.an12wQjRm9WTN2Ww4ttqUzn-OG1-x4folmwVt7yaHBQ';
+
+var esriWorldImagery = new Cesium.ProviderViewModel({
+    name: "ESRI World Imagery",
+    iconUrl: Cesium.buildModuleUrl("Widgets/Images/ImageryProviders/esriWorldImagery.png"),
+    tooltip: "Muestra imágenes satelitales de ESRI.",
+    creationFunction: function () {
+        return new Cesium.ArcGisMapServerImageryProvider({
+            url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+        });
+    }
+});
+
 var viewer = new Cesium.Viewer('cesiumContainer', {
     terrainProvider: Cesium.createWorldTerrain(),
-    imageryProvider: new Cesium.OpenStreetMapImageryProvider({
-        url: 'https://a.tile.openstreetmap.org/'
-    }),
+    imageryProviderViewModels: [esriWorldImagery],
+    selectedImageryProviderViewModel: esriWorldImagery,
     animation: false,
-    baseLayerPicker: true,
+    baseLayerPicker: false,
     fullscreenButton: false,
     homeButton: false,
     infoBox: true,
@@ -180,34 +191,55 @@ async function fetchTiempo(lat, lon) {
     };
 }
 
+let activePopup = null; // Variable para rastrear el pop-up activo
+
 viewer.screenSpaceEventHandler.setInputAction(async function onLeftClick(movement) {
     const pickedFeature = viewer.scene.pick(movement.position);
+
     if (pickedFeature && pickedFeature.id) {
         const entity = pickedFeature.id;
+
+        if (!entity.position) return;
+
         const coords = Cesium.Cartographic.fromCartesian(entity.position.getValue(Cesium.JulianDate.now()));
         const lat = Cesium.Math.toDegrees(coords.latitude);
         const lon = Cesium.Math.toDegrees(coords.longitude);
 
         const weatherInfo = await fetchTiempo(lat, lon);
 
-        const popupContent = `
+        const eventDetails = document.getElementById('event-details');
+        const previousContent = eventDetails.innerHTML;
+
+        const newPopupContent = `
             <strong>${entity.description.getValue()}</strong><br>
             ${weatherInfo ? `<p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
             <img src="${weatherInfo.icon}" alt="Icono del clima">
         `;
-        viewer.entities.add({
-            position: entity.position.getValue(Cesium.JulianDate.now()),
-            label: {
-                text: popupContent,
-                verticalOrigin: Cesium.VerticalOrigin.BOTTOM
-            }
-        });
 
-        document.getElementById('event-details').innerHTML = `
-            <h3>Ubicación Seleccionada</h3>
-            <p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>
-        `;
+        if (!previousContent.includes(lat.toFixed(2)) || !previousContent.includes(lon.toFixed(2))) {
+            if (activePopup) {
+                viewer.entities.remove(activePopup); // Eliminar solo el pop-up anterior
+            }
+
+            activePopup = viewer.entities.add({
+                position: entity.position.getValue(Cesium.JulianDate.now()),
+                label: {
+                    text: newPopupContent,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    disableDepthTestDistance: Number.POSITIVE_INFINITY // Asegura que el pop-up no desaparezca por la profundidad
+                }
+            });
+
+            eventDetails.innerHTML = `
+                <h3>Ubicación Seleccionada</h3>
+                <p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>
+                <p>Latitud: ${lat.toFixed(2)}, Longitud: ${lon.toFixed(2)}</p>
+            `;
+        }
     }
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+
 
 fetchEvents();
