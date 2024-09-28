@@ -72,7 +72,6 @@ function addEventToCesium(event, iconUrl) {
                     <h3>${event.title}</h3>
                     <p><strong>Categoría:</strong> ${event.categories[0].title}</p>
                     <p><strong>Fecha de inicio:</strong> ${formatDate(event.geometry[0].date)}</p>
-                    <p><strong>Ubicación:</strong> Lat: ${coords[1]}, Lng: ${coords[0]}</p>
                 `
             });
             entity.category = event.categories[0].title;
