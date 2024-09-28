@@ -191,7 +191,7 @@ async function fetchTiempo(lat, lon) {
     };
 }
 
-let activePopup = null; // Variable para rastrear el pop-up activo
+let activePopup = null;
 
 viewer.screenSpaceEventHandler.setInputAction(async function onLeftClick(movement) {
     const pickedFeature = viewer.scene.pick(movement.position);
@@ -207,34 +207,27 @@ viewer.screenSpaceEventHandler.setInputAction(async function onLeftClick(movemen
 
         const weatherInfo = await fetchTiempo(lat, lon);
 
+        const descriptionHTML = `
+            <h3>${entity.description.getValue()}</h3>
+            ${weatherInfo ? `
+                <p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>
+                <img src="${weatherInfo.icon}" alt="Icono del clima">` 
+            : '<p>Información del clima no disponible</p>'}
+        `;
+
+        viewer.selectedEntity = entity;
+        viewer.infoBox.viewModel.titleText = entity.description.getValue();
+        viewer.infoBox.viewModel.description = descriptionHTML;
+
         const eventDetails = document.getElementById('event-details');
         const previousContent = eventDetails.innerHTML;
 
-        const newPopupContent = `
-            <strong>${entity.description.getValue()}</strong><br>
-            ${weatherInfo ? `<p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>` : 'Información del clima no disponible.'}
-            <img src="${weatherInfo.icon}" alt="Icono del clima">
-        `;
-
-        if (!previousContent.includes(lat.toFixed(2)) || !previousContent.includes(lon.toFixed(2))) {
+        if (!previousContent.includes(weatherInfo.temperature)) {
             if (activePopup) {
-                viewer.entities.remove(activePopup); // Eliminar solo el pop-up anterior
+                viewer.entities.remove(activePopup); 
             }
 
-            activePopup = viewer.entities.add({
-                position: entity.position.getValue(Cesium.JulianDate.now()),
-                label: {
-                    text: newPopupContent,
-                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    disableDepthTestDistance: Number.POSITIVE_INFINITY // Asegura que el pop-up no desaparezca por la profundidad
-                }
-            });
-
-            eventDetails.innerHTML = `
-                <h3>Ubicación Seleccionada</h3>
-                <p><strong>Temperatura actual:</strong> ${weatherInfo.temperature} °C</p>
-                <p>Latitud: ${lat.toFixed(2)}, Longitud: ${lon.toFixed(2)}</p>
-            `;
+            eventDetails.innerHTML = descriptionHTML;
         }
     }
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
